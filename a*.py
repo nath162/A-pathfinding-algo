@@ -42,6 +42,8 @@ def dist_chaque_cellule(grid):
 def celluleactuelle(grid):
     if not algo_a_commencer:
         cact = startp
+        grid[cact[1]][cact[0]] = "T"
+    #une fois algo écrit changer a chaque fois le symbole de la cellule actuelle
 
 def voisin(grid,cact):
     cellule = grid[cact[1]][cact[0]]
@@ -66,8 +68,9 @@ def voisin(grid,cact):
     except IndexError:
         pass
 
-def algo(grid):
-    pass
+def algo(grid,voisin):
+    pass#il faut qu'il fasse juste la différence de valeur entre les voisins et qu'il change la valeur de la cellule actuel
+    #a celle qu'il a choisi il faut donc lui faire passer la fonction voisin
 
 dist(grid)
 print(dist_chaque_cellule(grid))
