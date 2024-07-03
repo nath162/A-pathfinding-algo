@@ -2,11 +2,14 @@ grid= [ ["S","O","0"],
         [ "O","O","O"],
         [ "O","O","E"],
         ]
+
 setdistance = set()
 startp=()
 endp =()
 algo_a_commencer = False
 cact = ()
+setcconnueparalgo = {}
+
 def dist(grid):
     global startp,endp
     for i in range(len(grid)):
@@ -22,6 +25,8 @@ def dist(grid):
     dist = abs(x-xe)+abs(y-ye)
     setdistance.add(("S",dist))
     setdistance.add(("E",0))
+    setcconnueparalgo.add(("S",dist))
+    setcconnueparalgo.add(("E",0))
     print(endp)
 
 def dist_chaque_cellule(grid):
@@ -33,11 +38,36 @@ def dist_chaque_cellule(grid):
                 xo = i
                 yo=j 
                 dist = abs(xo-endp[0])+abs(yo-endp[1])
-                setdistance.add(("o"+str(count),dist))
+                setdistance.add(("O"+str(count),dist))
+
 def celluleactuelle(grid):
     if not algo_a_commencer:
         cact = startp
-def voisin(grid):
+
+def voisin(grid,cact):
+    cellule = grid[cact[1]][cact[0]]
+    try:
+        voisinup = (cact[1]+1,cact[0])
+        setcconnueparalgo.add(voisinup)
+    except IndexError:
+        pass
+    try:
+        voisindown = grid(cact[1]-1,cact[0])
+        setcconnueparalgo.add(voisindown)
+    except IndexError:
+        pass
+    try:
+        voisinleft = grid(cact[1],cact[0]-1)
+        setcconnueparalgo.add(voisinleft)
+    except IndexError:
+        pass
+    try:
+        voisindroite = grid(cact[1],cact[0]+1)
+        setcconnueparalgo.add(voisindroite)
+    except IndexError:
+        pass
+
+def algo(grid):
     pass
 
 dist(grid)
