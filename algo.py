@@ -1,5 +1,6 @@
 setdistance = dict()
 startp=()
+possible =True
 endp =()
 algo_a_commencer = False
 cact = ()
@@ -45,32 +46,38 @@ def celluleactuelle(grid,startp):
     grid[cact[0]][cact[1]] = "T"
 
 def voisin(grid):
-    global meilleur,minval
+    global meilleur,minval,possible
     listmeilleur = dict()
     if cact[1]-1 >= 0:
         voisinup = (cact[0],cact[1]-1)
-        dstvoisinup = setdistance[voisinup]
-        listmeilleur[voisinup] = dstvoisinup
-        setcconnueparalgo[voisinup] = dstvoisinup
-        
+        if grid[cact[0]][cact[1]-1] == "O" or grid[cact[0]][cact[1]-1] == "E":
+            dstvoisinup = setdistance[voisinup]
+            listmeilleur[voisinup] = dstvoisinup
+            setcconnueparalgo[voisinup] = dstvoisinup
+
     if cact[1]+1 < len(grid):
         voisindown = (cact[0],cact[1]+1)
-        dstvoisindown = setdistance[voisindown]
-        listmeilleur[voisindown] = dstvoisindown
-        setcconnueparalgo[voisindown] = dstvoisindown
+        if grid[cact[0]][cact[1]+1] == "O" or grid[cact[0]][cact[1]+1] == "E":
+            dstvoisindown = setdistance[voisindown]
+            listmeilleur[voisindown] = dstvoisindown
+            setcconnueparalgo[voisindown] = dstvoisindown
 
     if cact[0]-1>= 0:
         voisinleft = (cact[0]-1,cact[1])
-        dstvoisinleft = setdistance[voisinleft]
-        listmeilleur[voisinleft] = dstvoisinleft
-        setcconnueparalgo[voisinleft] = dstvoisinleft
+        if grid[cact[0]-1][cact[1]] == "O" or grid[cact[0]-1][cact[1]] == "E":
+            dstvoisinleft = setdistance[voisinleft]
+            listmeilleur[voisinleft] = dstvoisinleft
+            setcconnueparalgo[voisinleft] = dstvoisinleft
 
     if cact[0]+1 < len(grid[cact[1]]):
         voisindroite = (cact[0]+1,cact[1])
-        dstvoisindroite = setdistance[voisindroite]
-        listmeilleur[voisindroite] = dstvoisindroite
-        setcconnueparalgo[voisindroite] = dstvoisindroite
+        if grid[cact[0]+1][cact[1]] == "O" or grid[cact[0]+1][cact[1]] == "E":
+            dstvoisindroite = setdistance[voisindroite]
+            listmeilleur[voisindroite] = dstvoisindroite
+            setcconnueparalgo[voisindroite] = dstvoisindroite
 
+    if listmeilleur == {}:
+        possible = False
     for key,value in listmeilleur.items():
         if minval == None or value < minval:
             minval = value
@@ -95,16 +102,14 @@ def affichgrille(grid):
     return strgrille
 
 def main():
-    grid= [ ["S","O","O","O"],
-        [ "O","O","O","O"],
-        [ "O","O","O","E"],
-        ]
+    grid= [ ["S","O","X","E"]]
 
     dist(grid)
     dist_chaque_cellule(grid)
-    while not fini :
-        celluleactuelle(grid,startp)
+    celluleactuelle(grid,startp)
+    while not fini and possible:
         voisin(grid)
         algo(grid)
+        celluleactuelle(grid,startp)
 if __name__ == "__main__":
     main()
