@@ -8,11 +8,10 @@ etape = 0
 fini = False
 meilleur = None
 minval = None
-
 def dist(grid):
     global startp,endp,setdistance,setcconnueparalgo
     for i in range(len(grid)):
-        for j in range(len(grid)):
+        for j in range(len(grid[i])):
             if grid[i][j] =="S":
                 x = j
                 y = i
@@ -24,14 +23,14 @@ def dist(grid):
     dist = abs(x-xe)+abs(y-ye)
     setdistance[(x,y)] = dist
     setdistance[(xe,ye)] = 0
-    setcconnueparalgo["S"] = dist 
-    setcconnueparalgo["E"] = 0
+    setcconnueparalgo[(x,y)] = dist 
+    setcconnueparalgo[(xe,ye)] = 0
 
 def dist_chaque_cellule(grid):
     global setdistance
     count = 0
     for i in range(len(grid)):
-        for j in range(len(grid)):
+        for j in range(len(grid[i])):
             if grid[i][j] == "O":
                 count += 1
                 xo = j
@@ -52,23 +51,26 @@ def voisin(grid):
         voisinup = (cact[0],cact[1]-1)
         dstvoisinup = setdistance[voisinup]
         listmeilleur[voisinup] = dstvoisinup
-
+        setcconnueparalgo[voisinup] = dstvoisinup
+        
     if cact[1]+1 < len(grid):
         voisindown = (cact[0],cact[1]+1)
         dstvoisindown = setdistance[voisindown]
         listmeilleur[voisindown] = dstvoisindown
+        setcconnueparalgo[voisindown] = dstvoisindown
 
     if cact[0]-1>= 0:
         voisinleft = (cact[0]-1,cact[1])
         dstvoisinleft = setdistance[voisinleft]
         listmeilleur[voisinleft] = dstvoisinleft
+        setcconnueparalgo[voisinleft] = dstvoisinleft
 
     if cact[0]+1 < len(grid[cact[1]]):
         voisindroite = (cact[0]+1,cact[1])
         dstvoisindroite = setdistance[voisindroite]
         listmeilleur[voisindroite] = dstvoisindroite
+        setcconnueparalgo[voisindroite] = dstvoisindroite
 
-    
     for key,value in listmeilleur.items():
         if minval == None or value < minval:
             minval = value
@@ -93,9 +95,9 @@ def affichgrille(grid):
     return strgrille
 
 def main():
-    grid= [ ["S","O","O"],
-        [ "O","O","O"],
-        [ "O","O","E"],
+    grid= [ ["S","O","O","O"],
+        [ "O","O","O","O"],
+        [ "O","O","O","E"],
         ]
 
     dist(grid)
@@ -104,6 +106,5 @@ def main():
         celluleactuelle(grid,startp)
         voisin(grid)
         algo(grid)
-
 if __name__ == "__main__":
     main()
