@@ -78,6 +78,8 @@ def voisin(grid):
 
     if listmeilleur == {} and setcconnueparalgo == {}:#par contre si il connait une possibilité il faut qu'il y retourne et trouve un autre chemin apartir de cette cellule
         possible = False
+    elif setcconnueparalgo != {}:
+        cact = setcconnueparalgo[0]
     for key,value in listmeilleur.items():
         if minval == None or value < minval:
             minval = value
