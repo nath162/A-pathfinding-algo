@@ -80,11 +80,11 @@ def algo(grid):
     algo_a_commencer = True
     cact = meilleur
     etape+=1
+    print(" nombre d'étape : {}".format(etape))
     print(cact)
     if grid[cact[1]][cact[0]] == "E":
         fini = True
         print(affichgrille(grid))
-    print(" nombre d'étape : {}".format(etape))
 
 def affichgrille(grid):
     strgrille = ""
@@ -99,7 +99,6 @@ def main():
         ]
 
     dist(grid)
-    print( "heo")
     dist_chaque_cellule(grid)
     while not fini :
         celluleactuelle(grid,startp)
