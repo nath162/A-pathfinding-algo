@@ -1,3 +1,5 @@
+import unittest
+
 grid= [ ["S","O","0"],
         [ "O","O","O"],
         [ "O","O","E"],
@@ -9,9 +11,10 @@ endp =()
 algo_a_commencer = False
 cact = ()
 setcconnueparalgo = {}
-
+etape = 0
+fini = False
 def dist(grid):
-    global startp,endp
+    global startp,endp,setdistance,setcconnueparalgo
     for i in range(len(grid)):
         for j in range(len(grid)):
             if grid[i][j] =="S":
@@ -29,6 +32,7 @@ def dist(grid):
     setcconnueparalgo["E"] = 0
 
 def dist_chaque_cellule(grid):
+    global setdistance
     count = 0
     for i in range(len(grid)):
         for j in range(len(grid)):
@@ -40,37 +44,62 @@ def dist_chaque_cellule(grid):
                 setdistance[(xo,yo)] = dist
 
 def celluleactuelle(grid):
+    global cact
     if not algo_a_commencer:
         cact = startp
-        grid[cact[1]][cact[0]] = "T"
-    #une fois algo écrit changer a chaque fois le symbole de la cellule actuelle
+        grid[cact[0]][cact[1]] = "T"
+    else:
+        grid[cact[0]][cact[1]] = "T"
 
 def voisin(grid,cact):
     cellule = grid[cact[1]][cact[0]]
-    try:
-        voisinup = (cact[1]+1,cact[0])
+    global dstvoisinup,dstvoisindown,dstvoisinleft,dstvoisindroite,lstdst,meilleur
+    listmeilleur = {}
+    if cact[1]-1 >= 0:
+        voisinup = (cact[0],cact[1]-1)
         dstvoisinup = setdistance[voisinup]
-    except IndexError:
-        pass
-    try:
-        voisindown = (cact[1]-1,cact[0])
+        listmeilleur[voisinup] = dstvoisinup
+    else:
+        voisinup = None
+    if cact[1]+1 < len(grid):
+        voisindown = (cact[0],cact[1]+1)
         dstvoisindown = setdistance[voisindown]
-    except IndexError:
-        pass
-    try:
-        voisinleft = (cact[1],cact[0]-1)
+        listmeilleur[voisindown] = dstvoisindown
+    else:
+        voisindown = None
+    if cact[0]-1>= 0:
+        voisinleft = (cact[0]-1,cact[1])
         dstvoisinleft = setdistance[voisinleft]
-    except IndexError:
-        pass
-    try:
-        voisindroite = (cact[1],cact[0]+1)
+        listmeilleur[voisinleft] = dstvoisinleft
+    else:
+        voisinleft = None
+    if cact[0]+1 < len(grid[cact[1]]):
+        voisindroite = (cact[0]+1,cact[1])
         dstvoisindroite = setdistance[voisindroite]
-    except IndexError:
-        pass
+        listmeilleur[voisindroite] = dstvoisindroite
+    else:
+        voisindroite = None
+    minval = None
+    meilleur = None
+    for i,j in listmeilleur:
+        if minval == None or minval > j:
+            minval = j 
+            meilleur = i
 
-def algo(grid,voisin):
-    pass#il faut qu'il fasse juste la différence de valeur entre les voisins et qu'il change la valeur de la cellule actuel
-    #a celle qu'il a choisi il faut donc lui faire passer la fonction voisin
+def algo(grid):
+    global etape,fini,cact
+    algo_a_commencer = True
+    cact = meilleur
+
 
 dist(grid)
-print(dist_chaque_cellule(grid))
+dist_chaque_cellule(grid)
+while not fini :
+    celluleactuelle(grid)
+    voisin(grid,cact)
+    algo(grid)
+
+
+
+class TestAbsFunction(unittest.TestCase):
+    pass
