@@ -83,23 +83,26 @@ def affichgrille(grid):
     return strgrille
 
 
+
+setdistance = dict()
+startp=()
+endp =()
+algo_a_commencer = False
+cact = ()
+setcconnueparalgo = {}
+etape = 0
+fini = False
+meilleur = None
+minval = None
+
 def main():
     grid= [ ["S","O","O"],
         [ "O","O","O"],
         [ "O","O","E"],
         ]
 
-    setdistance = dict()
-    startp=()
-    endp =()
-    algo_a_commencer = False
-    cact = ()
-    setcconnueparalgo = {}
-    etape = 0
-    fini = False
-    meilleur = None
-    minval = None
     dist(grid)
+    print( "heo")
     dist_chaque_cellule(grid)
     while not fini :
         celluleactuelle(grid,startp)
@@ -108,3 +111,5 @@ def main():
 
 
 
+if __name__ == "__main__":
+    main()
