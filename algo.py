@@ -1,21 +1,4 @@
-import unittest
-if __name__ == "__main__":
-    unittest.main()
-grid= [ ["S","O","0"],
-        [ "O","O","O"],
-        [ "O","O","E"],
-        ]
 
-setdistance = dict()
-startp=()
-endp =()
-algo_a_commencer = False
-cact = ()
-setcconnueparalgo = {}
-etape = 0
-fini = False
-meilleur = None
-minval = None
 def dist(grid):
     global startp,endp,setdistance,setcconnueparalgo
     for i in range(len(grid)):
@@ -90,27 +73,38 @@ def algo(grid):
     print(cact)
     if grid[cact[1]][cact[0]] == "E":
         fini = True
-        for i in grid:
-            print(i)
-        print(" nombre d'étape : {}".format(etape))
-    
+        print(affichgrille(grid))
+    print(" nombre d'étape : {}".format(etape))
+
+def affichgrille(grid):
+    strgrille = ""
+    for i in grid:
+        strgrille = strgrille + str(i) + "\n"    
+    return strgrille
 
 
-dist(grid)
-dist_chaque_cellule(grid)
-while not fini :
-    celluleactuelle(grid,startp)
-    voisin(grid)
-    algo(grid)
+def main():
+    grid= [ ["S","O","O"],
+        [ "O","O","O"],
+        [ "O","O","E"],
+        ]
+
+    setdistance = dict()
+    startp=()
+    endp =()
+    algo_a_commencer = False
+    cact = ()
+    setcconnueparalgo = {}
+    etape = 0
+    fini = False
+    meilleur = None
+    minval = None
+    dist(grid)
+    dist_chaque_cellule(grid)
+    while not fini :
+        celluleactuelle(grid,startp)
+        voisin(grid)
+        algo(grid)
 
 
-class TestAbsFunction(unittest.TestCase):
-    def test_positive_number(self):
-        self.assertEqual(abs(10), 10)
-
-    def test_negative_number(self):
-        self.assertEqual(abs(-10), 10)
-
-    def test_zero(self):
-        self.assertEqual(abs(0), 0)
 
