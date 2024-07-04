@@ -43,43 +43,44 @@ def celluleactuelle(grid,startp):
     global cact
     if not algo_a_commencer:
         cact = startp
-    grid[cact[0]][cact[1]] = "T"
+    grid[cact[1]][cact[0]] = "T"
 
 def voisin(grid):
     global meilleur,minval,possible
     listmeilleur = dict()
     if cact[1]-1 >= 0:
         voisinup = (cact[0],cact[1]-1)
-        if grid[cact[0]][cact[1]-1] == "O" or grid[cact[0]][cact[1]-1] == "E":
+        if grid[cact[1]-1][cact[0]] == "O" or grid[cact[1]-1][cact[0]] == "E":
             dstvoisinup = setdistance[voisinup]
             listmeilleur[voisinup] = dstvoisinup
             setcconnueparalgo[voisinup] = dstvoisinup
 
     if cact[1]+1 < len(grid):
         voisindown = (cact[0],cact[1]+1)
-        if grid[cact[0]][cact[1]+1] == "O" or grid[cact[0]][cact[1]+1] == "E":
+        if grid[cact[1]+1][cact[0]] == "O" or grid[cact[1]+1][cact[0]] == "E":
             dstvoisindown = setdistance[voisindown]
             listmeilleur[voisindown] = dstvoisindown
             setcconnueparalgo[voisindown] = dstvoisindown
 
     if cact[0]-1>= 0:
         voisinleft = (cact[0]-1,cact[1])
-        if grid[cact[0]-1][cact[1]] == "O" or grid[cact[0]-1][cact[1]] == "E":
+        if grid[cact[1]][cact[0]-1] == "O" or grid[cact[1]][cact[0]-1] == "E":
             dstvoisinleft = setdistance[voisinleft]
             listmeilleur[voisinleft] = dstvoisinleft
             setcconnueparalgo[voisinleft] = dstvoisinleft
 
     if cact[0]+1 < len(grid[cact[1]]):
         voisindroite = (cact[0]+1,cact[1])
-        if grid[cact[0]+1][cact[1]] == "O" or grid[cact[0]+1][cact[1]] == "E":
+        if grid[cact[1]][cact[0]+1] == "O" or grid[cact[1]][cact[0]+1] == "E":
             dstvoisindroite = setdistance[voisindroite]
             listmeilleur[voisindroite] = dstvoisindroite
             setcconnueparalgo[voisindroite] = dstvoisindroite
 
     if listmeilleur == {} and setcconnueparalgo == {}:#par contre si il connait une possibilité il faut qu'il y retourne et trouve un autre chemin apartir de cette cellule
         possible = False
-    elif setcconnueparalgo != {}:
-        cact = setcconnueparalgo[0]
+    elif setcconnueparalgo != {} and listmeilleur == {}:
+        meilleur = setcconnueparalgo[0]
+        setcconnueparalgo.remove(setcconnueparalgo[0])
     for key,value in listmeilleur.items():
         if minval == None or value < minval:
             minval = value
@@ -104,7 +105,8 @@ def affichgrille(grid):
     return strgrille
 
 def main():
-    grid= [ ["S","O","X","E"]]
+    grid= [ ["S","O","O","O"],
+           ["O","O","X","E"]]
 
     dist(grid)
     dist_chaque_cellule(grid)
