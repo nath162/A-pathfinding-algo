@@ -76,7 +76,7 @@ def voisin(grid):
             listmeilleur[voisindroite] = dstvoisindroite
             setcconnueparalgo[voisindroite] = dstvoisindroite
 
-    if listmeilleur == {}:
+    if listmeilleur == {} and setcconnueparalgo == {}:#par contre si il connait une possibilité il faut qu'il y retourne et trouve un autre chemin apartir de cette cellule
         possible = False
     for key,value in listmeilleur.items():
         if minval == None or value < minval:
