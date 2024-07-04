@@ -1,3 +1,13 @@
+setdistance = dict()
+startp=()
+endp =()
+algo_a_commencer = False
+cact = ()
+setcconnueparalgo = {}
+etape = 0
+fini = False
+meilleur = None
+minval = None
 
 def dist(grid):
     global startp,endp,setdistance,setcconnueparalgo
@@ -82,19 +92,6 @@ def affichgrille(grid):
         strgrille = strgrille + str(i) + "\n"    
     return strgrille
 
-
-
-setdistance = dict()
-startp=()
-endp =()
-algo_a_commencer = False
-cact = ()
-setcconnueparalgo = {}
-etape = 0
-fini = False
-meilleur = None
-minval = None
-
 def main():
     grid= [ ["S","O","O"],
         [ "O","O","O"],
@@ -108,8 +105,6 @@ def main():
         celluleactuelle(grid,startp)
         voisin(grid)
         algo(grid)
-
-
 
 if __name__ == "__main__":
     main()
