@@ -75,12 +75,12 @@ def voisin(grid):
             dstvoisindroite = setdistance[voisindroite]
             listmeilleur[voisindroite] = dstvoisindroite
             setcconnueparalgo[voisindroite] = dstvoisindroite
-
+    print(setcconnueparalgo)
     if listmeilleur == {} and setcconnueparalgo == {}:#par contre si il connait une possibilité il faut qu'il y retourne et trouve un autre chemin apartir de cette cellule
         possible = False
     elif setcconnueparalgo != {} and listmeilleur == {}:
-        meilleur = setcconnueparalgo[0]
-        setcconnueparalgo.remove(setcconnueparalgo[0])
+        meilleur = setcconnueparalgo[()]
+        setcconnueparalgo.remove(setcconnueparalgo[()])
     for key,value in listmeilleur.items():
         if minval == None or value < minval:
             minval = value
