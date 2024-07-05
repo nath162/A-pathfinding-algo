@@ -96,7 +96,6 @@ def voisin(grid):
 
 def chooseother(set,meilleur):
     meilleur2 = None
-    set.remove(meilleur)
     for key,value in set:
         if value < meilleur2 or meilleur2 == None:
             meilleur2 = key
@@ -136,11 +135,18 @@ def trouvermeilleurchemin(grid,seta):
     return chemin
 
 def main():
-    grid= [ ["S","O","O","O"],
-           ["O","O","O","X"],
-           ["O","O","O","O"],
-           ["O","O","X","E"]
-           ]
+    grid = [
+        ["S", "O", "O", "O", "O", "O", "O", "O", "O", "O"],
+        ["O", "O", "O", "X", "O", "O", "O", "O", "O", "O"],
+        ["O", "O", "O", "O", "O", "O", "X", "O", "O", "O"],
+        ["O", "O", "X", "O", "O", "O", "O", "O", "O", "O"],
+        ["O", "O", "O", "O", "X", "O", "O", "O", "O", "O"],
+        ["O", "O", "O", "O", "O", "O", "O", "X", "O", "O"],
+        ["O", "X", "O", "O", "O", "O", "O", "O", "O", "O"],
+        ["O", "O", "O", "O", "O", "X", "O", "O", "O", "O"],
+        ["O", "O", "O", "O", "O", "O", "O", "O", "X", "O"],
+        ["X", "O", "O", "O", "O", "O", "O", "O", "X", "E"]
+    ]
 
     dist(grid)
     dist_chaque_cellule(grid)
