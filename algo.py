@@ -149,6 +149,6 @@ def main():
         voisin(grid)
         algo(grid)
         celluleactuelle(grid,startp)
-    print(trouvermeilleurchemin(grid,setcconnueparalgo))
+    print("meilleur chemin trouver : ",trouvermeilleurchemin(grid,setcconnueparalgo))
 if __name__ == "__main__":
     main()
