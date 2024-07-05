@@ -48,7 +48,34 @@ def celluleactuelle(grid,startp):
 def voisin(grid):
     global meilleur,minval,possible
     listmeilleur = dict()
-    #implementer les diagonales et faire en sorte que les conditions ne se répétent pas 
+    if cact[0]+1 < len(grid[cact[1]]) and cact[1]+1 < len(grid):
+        voisinupdroite = (cact[0]+1,cact[1]+1)
+        if grid[cact[1]+1][cact[0]+1] == "O" or grid[cact[1]+1][cact[0]+1] == "E":
+            dstvoisinupdroite = setdistance[voisinupdroite]
+            listmeilleur[voisinupdroite] = dstvoisinupdroite
+            setcconnueparalgo[voisinupdroite] = dstvoisinupdroite
+
+    if cact[1]+1 < len(grid) and cact[0]-1 >= 0:
+        voisinupgauche = (cact[0]-1,cact[1]+1)
+        if grid[cact[1]+1][cact[0]-1] == "O" or grid[cact[1]+1][cact[0]-1] == "E":
+            dstvoisinupgauche = setdistance[voisinupgauche]
+            listmeilleur[voisinupgauche] = dstvoisinupgauche
+            setcconnueparalgo[voisinupgauche] = dstvoisinupgauche
+
+    if cact[0]-1>= 0 and cact[1]-1 >= 0:
+        voisinleftdown = (cact[0]-1,cact[1]-1)
+        if grid[cact[1]-1][cact[0]-1] == "O" or grid[cact[1]-1][cact[0]-1] == "E":
+            dstvoisinleftdown = setdistance[voisinleftdown]
+            listmeilleur[voisinleftdown] = dstvoisinleftdown
+            setcconnueparalgo[voisinleftdown] = dstvoisinleftdown
+
+    if cact[0]+1 < len(grid[cact[1]]) and cact[1]-1 >= 0:
+        voisindroitedown = (cact[0]+1,cact[1]-1)
+        if grid[cact[1]-1][cact[0]+1] == "O" or grid[cact[1]-1][cact[0]+1] == "E":
+            dstvoisindroitedown = setdistance[voisindroitedown]
+            listmeilleur[voisindroitedown] = dstvoisindroitedown
+            setcconnueparalgo[voisindroitedown] = dstvoisindroitedown
+    #fin diago
     if cact[1]-1 >= 0:
         voisinup = (cact[0],cact[1]-1)
         if grid[cact[1]-1][cact[0]] == "O" or grid[cact[1]-1][cact[0]] == "E":
