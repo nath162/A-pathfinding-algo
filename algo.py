@@ -48,6 +48,7 @@ def celluleactuelle(grid,startp):
 def voisin(grid):
     global meilleur,minval,possible
     listmeilleur = dict()
+
     if cact[1]-1 >= 0:
         voisinup = (cact[0],cact[1]-1)
         if grid[cact[1]-1][cact[0]] == "O" or grid[cact[1]-1][cact[0]] == "E":
@@ -75,17 +76,31 @@ def voisin(grid):
             dstvoisindroite = setdistance[voisindroite]
             listmeilleur[voisindroite] = dstvoisindroite
             setcconnueparalgo[voisindroite] = dstvoisindroite
+
     print(setcconnueparalgo)
     if listmeilleur == {} and setcconnueparalgo == {}:#par contre si il connait une possibilité il faut qu'il y retourne et trouve un autre chemin apartir de cette cellule
         possible = False
     elif setcconnueparalgo != {} and listmeilleur == {}:
-        meilleur = setcconnueparalgo[()]
-        setcconnueparalgo.remove(setcconnueparalgo[()])
-    for key,value in listmeilleur.items():
-        if minval == None or value < minval:
-            minval = value
-            meilleur = key
-    return meilleur
+        meilleur = setcconnueparalgo[chooseother(setcconnueparalgo,meilleur)]
+        setcconnueparalgo.remove(setcconnueparalgo[meilleur])
+        return meilleur
+        listmeilleur.clear()
+    else :
+        minval =None
+        for key,value in listmeilleur.items():
+            if minval == None or value < minval:
+                minval = value
+                meilleur = key
+        return meilleur
+        listmeilleur.clear()
+
+def chooseother(set,meilleur):
+    meilleur2 = None
+    set.remove(meilleur)
+    for key,value in set:
+        if value < meilleur2 or meilleur2 == None:
+            meilleur2 = key
+    return set.index(meilleur2)
 
 def algo(grid):
     global etape,fini,cact,algo_a_commencer
@@ -104,9 +119,28 @@ def affichgrille(grid):
         strgrille = strgrille + str(i) + "\n"    
     return strgrille
 
+def trouvermeilleurchemin(grid,seta):
+    chemin = dict()
+    while seta != {}:
+        minv = None
+        mink = None
+        for i in seta.copy().keys():
+            if minv == None or seta[i] < minv:
+                minv = seta[i]
+                mink = i
+        seta.pop(mink)
+        chemin[mink] = minv
+        for i in seta.copy().keys():
+            if seta[i] == minv:
+                seta.pop(i)
+    return chemin
+
 def main():
     grid= [ ["S","O","O","O"],
-           ["O","O","X","E"]]
+           ["O","O","O","X"],
+           ["O","O","O","O"],
+           ["O","O","X","E"]
+           ]
 
     dist(grid)
     dist_chaque_cellule(grid)
@@ -115,5 +149,6 @@ def main():
         voisin(grid)
         algo(grid)
         celluleactuelle(grid,startp)
+    print(trouvermeilleurchemin(grid,setcconnueparalgo))
 if __name__ == "__main__":
     main()
