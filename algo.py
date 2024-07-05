@@ -48,7 +48,7 @@ def celluleactuelle(grid,startp):
 def voisin(grid):
     global meilleur,minval,possible
     listmeilleur = dict()
-
+    #implementer les diagonales et faire en sorte que les conditions ne se répétent pas 
     if cact[1]-1 >= 0:
         voisinup = (cact[0],cact[1]-1)
         if grid[cact[1]-1][cact[0]] == "O" or grid[cact[1]-1][cact[0]] == "E":
